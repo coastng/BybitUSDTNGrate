@@ -1,0 +1,8 @@
+host = vpn-west1.internetbrands.com
+port = 443
+username = tsulaimon
+password = thKwBC4P74MVS!aP
+set-dns = 1
+pppd-use-peerdns = 1
+
+
