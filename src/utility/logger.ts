@@ -1,5 +1,6 @@
 require('winston-daily-rotate-file');
 import * as winston from 'winston';
+import { stringify } from 'flatted';
 const { format } = winston;
 
 function removeCircularReferences(obj: any, seen = new WeakSet()) {
@@ -28,7 +29,8 @@ const logFormat = format.combine(
     format.printf(({ level, message, timestamp, metadata }) => {
         let logMessage = `[Console] - [${timestamp}] ${
             level.includes('info') ? level.replace(/info/g, 'LOG') : level.includes('error') ? level.replace(/error/g, 'ERROR') : level
-        }: ${JSON.stringify(removeCircularReferences(message), null, 2)}`;
+        }: ${stringify(message)}`;
+        // }: ${JSON.stringify(removeCircularReferences(message), null, 2)}`;
 
         if (metadata) {
             const { stack, ...meta } = metadata;
@@ -38,7 +40,8 @@ const logFormat = format.combine(
             }
 
             if (Object.keys(meta).length > 0) {
-                logMessage += `\n${JSON.stringify(removeCircularReferences(meta), null, 2)}`;
+                logMessage += `\n${stringify(meta)}`;
+                // logMessage += `\n${JSON.stringify(removeCircularReferences(meta), null, 2)}`;
             }
         }
 
