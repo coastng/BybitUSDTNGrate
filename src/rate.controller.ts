@@ -27,15 +27,15 @@ export const rateController = async (req: Request, res: Response) => {
             },
             {
                 timeout: 1000 * 4, // 4 secs timeout
-                validateStatus: (status: number) => [2, 3, 4, 5].some(num => status.toString().startsWith(num.toString())),
+                validateStatus: (status: number) => [1, 2, 3, 4, 5, 6].some(num => status.toString().startsWith(num.toString())),
             },
         );
 
-        return res.status(200).json(response.data);
+        return res.status(200).json(response?.data);
     } catch (error) {
-        log.info(`Error in getting USDT-NGN rate from bybit`);
-        log.info(JSON.stringify(error));
+        // log.info(`Error in getting USDT-NGN rate from bybit`);
         log.info(error);
+        log.info(JSON.stringify(error));
         return res.status(500).json({});
     }
 };
