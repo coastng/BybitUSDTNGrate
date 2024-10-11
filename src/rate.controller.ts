@@ -34,7 +34,7 @@ export const rateController = async (req: Request, res: Response) => {
         return res.status(200).json(response?.data);
     } catch (error) {
         // log.info(`Error in getting USDT-NGN rate from bybit`);
-        log.info(error);
+        log.info((error as any)?.response?.data || (error as any)?.data);
         log.info(JSON.stringify(error));
         return res.status(500).json({});
     }
