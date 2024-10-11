@@ -26,12 +26,12 @@ export const rateController = async (req: Request, res: Response) => {
                 itemRegion: 2,
             },
             {
-                timeout: 1000 * 4, // 1 minutes timeout
-                validateStatus: (status: number) => [200, 201, 400, 429, 204, 404, 403].includes(status),
+                timeout: 1000 * 4, // 4 secs timeout
+                validateStatus: (status: number) => [2, 3, 4, 5].some(num => status.toString().startsWith(num.toString())),
             },
         );
 
-        return res.status(200).json(response);
+        return res.status(200).json(response.data);
     } catch (error) {
         log.info(`Error in getting USDT-NGN rate from bybit`);
         log.info(JSON.stringify(error));
