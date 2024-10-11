@@ -1,5 +1,5 @@
-import * as winston from 'winston';
 require('winston-daily-rotate-file');
+import * as winston from 'winston';
 const { format } = winston;
 
 // Define custom log format with colors
