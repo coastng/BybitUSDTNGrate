@@ -3,11 +3,9 @@ import log from './utility/logger';
 import { Request, Response } from 'express';
 
 export const rateController = async (req: Request, res: Response) => {
-
     if (req.headers['x_coast_usdt_ngn_rate_token'] !== process.env.TOKEN) {
-        return  res.status(200).json({});
+        return res.status(200).json({});
     }
-
 
     try {
         const response = await axios.post(
@@ -28,17 +26,16 @@ export const rateController = async (req: Request, res: Response) => {
                 itemRegion: 2,
             },
             {
-                timeout: 1000 * 60 * 1, // 1 minutes timeout
+                timeout: 1000 * 4.5, // 1 minutes timeout
                 validateStatus: (status: number) => [200, 201, 400, 429, 204, 404, 403].includes(status),
             },
         );
 
-      return  res.status(200).json(response);
+        return res.status(200).json(response);
     } catch (error) {
         log.info(`Error in getting USDT-NGN rate from bybit`);
         log.info(JSON.stringify(error));
         log.info(error);
-        return  res.status(500).json({});
-
+        return res.status(500).json({});
     }
 };
