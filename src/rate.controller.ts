@@ -26,7 +26,7 @@ export const rateController = async (req: Request, res: Response) => {
                 itemRegion: 2,
             },
             {
-                timeout: 1000 * 4.5, // 1 minutes timeout
+                timeout: 1000 * 4, // 1 minutes timeout
                 validateStatus: (status: number) => [200, 201, 400, 429, 204, 404, 403].includes(status),
             },
         );
