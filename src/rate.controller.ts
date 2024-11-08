@@ -1,11 +1,10 @@
 import axios from 'axios';
-import log from './utility/logger';
 import { Request, Response } from 'express';
 
 export const rateController = async (req: Request, res: Response) => {
-    if (req.headers['x_coast_usdt_ngn_rate_token'] !== process.env.TOKEN) {
-        return res.status(200).json({});
-    }
+    // if (req.headers['x_coast_usdt_ngn_rate_token'] !== process.env.TOKEN) {
+    //     return res.status(200).json({});
+    // }
 
     try {
         const response = await axios.post(
@@ -33,9 +32,9 @@ export const rateController = async (req: Request, res: Response) => {
 
         return res.status(200).json(response?.data);
     } catch (error) {
+        console.log('Errror in getting rate');
+        console.error(JSON.stringify(error));
         // log.info(`Error in getting USDT-NGN rate from bybit`);
-        log.info((error as any)?.response?.data || (error as any)?.data);
-        log.info(JSON.stringify(error));
         return res.status(500).json({});
     }
 };

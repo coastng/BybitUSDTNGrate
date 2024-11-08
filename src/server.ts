@@ -26,4 +26,8 @@ app.get('/api/rate', rateController);
 app.use(notFound);
 app.use(errorHandler);
 
+app.listen(4050, () => {
+    console.log(`Server is running on http://localhost:${4050}`);
+});
+
 export default app;
