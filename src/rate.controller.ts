@@ -7,6 +7,9 @@ export const rateController = async (req: Request, res: Response) => {
     }
 
     try {
+        const { type } = req.query as { type: 'bit' | 'bulk' };
+
+        type;
         const response = await axios.post(
             `https://api2.bybit.com/fiat/otc/item/online`,
             {
@@ -17,9 +20,9 @@ export const rateController = async (req: Request, res: Response) => {
                     '14', // bank transfer payment
                 ],
                 side: '0', // sell (buy is "1")
-                size: '200',
+                size: '200', //the first 200 traders
                 page: '1',
-                amount: '1490000',
+                amount: type === 'bulk' ? '2000000' : '1490000',
                 authMaker: true,
                 canTrade: true,
                 itemRegion: 2,
