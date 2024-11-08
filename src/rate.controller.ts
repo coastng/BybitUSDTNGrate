@@ -2,9 +2,9 @@ import axios from 'axios';
 import { Request, Response } from 'express';
 
 export const rateController = async (req: Request, res: Response) => {
-    // if (req.headers['x_coast_usdt_ngn_rate_token'] !== process.env.TOKEN) {
-    //     return res.status(200).json({});
-    // }
+    if (req.headers['x_coast_usdt_ngn_rate_token'] !== process.env.TOKEN) {
+        return res.status(400).json({});
+    }
 
     try {
         const response = await axios.post(
@@ -30,7 +30,7 @@ export const rateController = async (req: Request, res: Response) => {
             },
         );
 
-        return res.status(200).json(response?.data);
+        return res.status(isNaN(response.status) ? 500 : response.status).json(response?.data);
     } catch (error) {
         console.log('Errror in getting rate');
         console.error(JSON.stringify(error));
