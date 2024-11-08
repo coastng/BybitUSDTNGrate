@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import { rateController } from './rate.controller';
 import { errorHandler, notFound } from './middlewares/error.middleware';
+import sls from 'serverless-http';
 
 dotenv.config();
 
@@ -26,8 +27,10 @@ app.get('/api/rate', rateController);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(4050, () => {
-    console.log(`Server is running on http://localhost:${4050}`);
-});
+// app.listen(4050, () => {
+//     console.log(`Server is running on http://localhost:${4050}`);
+// });
+
+// export const server = sls(app);
 
 export default app;

@@ -1,0 +1,47 @@
+service: bbitserverless-nodejs-app
+
+custom: # add these two lines
+    secrets: ${file(secrets.json)} # reference the secrets.json file
+
+    # serverless offline plugin setup
+    serverless-offline:
+        httpPort: 4050
+
+provider:
+    name: aws
+    runtime: nodejs18.x
+    # stage: production # make sure to change this to production
+    region: us-east-1
+    environment: # add environment property
+        ACCESS_KEY_ID: ${self:custom.secrets.ACCESS_KEY_ID}
+        SECRET_KEY: ${self:custom.secrets.SECRET_KEY}
+        TOKEN: ${self:custom.secrets.TOKEN}
+        # reference the NODE_ENV from the secrets.json file
+
+    timeout: 600
+
+plugins:
+    - serverless-offline
+    - serverless-offline-watcher
+
+package:
+    exclude:
+        # - node_modules/**
+        - test.secrets.json
+        - dev.secrets.json
+        - staging.secrets.json
+        - prod.secrets.json
+        - .env
+        - src
+        - artcolony_pictures/**
+        - artcolony_pictures_webp_result/**
+        - artcolony_pictures1/**
+        - dump/**
+
+functions:
+    app:
+        handler: dist/server.server
+        events:
+            # general
+            - httpApi: 'GET /healthcheck'
+            - httpApi: 'GET /api/rate'
