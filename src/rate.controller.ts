@@ -9,7 +9,6 @@ export const rateController = async (req: Request, res: Response) => {
     try {
         const { type } = req.query as { type: 'bit' | 'bulk' };
 
-        throw new Error();
         const response = await axios.post(
             `https://api2.bybit.com/fiat/otc/item/online`,
             {
